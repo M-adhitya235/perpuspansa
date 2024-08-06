@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import perpusCahayaImg from '../assets/perpuscahaya.jpg';
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -40,7 +41,7 @@ const Register = () => {
         <div
           className="hidden md:block lg:w-1/2 bg-cover bg-center"
           style={{
-            backgroundImage: `url('src/assets/perpuscahaya.jpg')`,
+            backgroundImage: `url(${perpusCahayaImg})`,
           }}
         ></div>
         <div className="w-full p-8 lg:w-1/2">

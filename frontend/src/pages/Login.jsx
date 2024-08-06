@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { LoginUser, reset } from "../features/authSlice";
+import perpusCahayaImg from '../assets/perpuscahaya.jpg';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -26,7 +27,6 @@ const Login = () => {
     }
 
   
- 
 
   return (
     <div className="flex items-center justify-center h-screen w-full px-5 sm:px-0">
@@ -34,7 +34,7 @@ const Login = () => {
         <div
           className="hidden md:block lg:w-1/2 bg-cover bg-center"
           style={{
-            backgroundImage: `url('src/assets/perpuscahaya.jpg')`,
+            backgroundImage: `url(${perpusCahayaImg})`,
           }}
         ></div>
         <div className="w-full p-8 lg:w-1/2">
