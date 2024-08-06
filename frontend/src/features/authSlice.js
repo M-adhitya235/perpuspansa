@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
 const initialState = {
     user: null,
     isError: false,
@@ -11,7 +13,7 @@ const initialState = {
 
 export const LoginUser = createAsyncThunk("user/LoginUser", async(user, thunkAPI) => {
     try {
-        const response = await axios.post('http://localhost:3000/login', {
+        const response = await axios.post(`${apiUrl}/login`, {
             email: user.email,
             password: user.password
         });
@@ -26,7 +28,7 @@ export const LoginUser = createAsyncThunk("user/LoginUser", async(user, thunkAPI
 
 export const RegisterUser = createAsyncThunk("user/RegisterUser", async(user, thunkAPI) => {
     try {
-        const response = await axios.post('http://localhost:3000/register', {
+        const response = await axios.post(`${apiUrl}/register`, {
             name: user.name,
             email: user.email,
             password: user.password,
@@ -44,7 +46,7 @@ export const RegisterUser = createAsyncThunk("user/RegisterUser", async(user, th
 
 export const getMe = createAsyncThunk("user/getMe", async(_, thunkAPI) => {
     try {
-        const response = await axios.get('http://localhost:3000/me');
+        const response = await axios.get(`${apiUrl}/me`);
         return response.data;
     } catch (error) {
         if (error.response) {
@@ -55,12 +57,12 @@ export const getMe = createAsyncThunk("user/getMe", async(_, thunkAPI) => {
 });
 
 export const LogOut = createAsyncThunk("user/LogOut", async() => {
-    await axios.delete('http://localhost:3000/logout');
+    await axios.delete(`${apiUrl}/logout`);
 });
 
 export const updateProfile = createAsyncThunk("user/updateProfile", async(user, thunkAPI) => {
     try {
-        const response = await axios.put('http://localhost:3000/profile', {
+        const response = await axios.put(`${apiUrl}/profile`, {
             name: user.name,
             fullName: user.fullName,
             kelas: user.kelas,

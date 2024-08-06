@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
+
+const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
 const CategoryPage = () => {
   const { category } = useParams();
@@ -25,7 +27,7 @@ const CategoryPage = () => {
 
   const getBooksByCategory = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/books/category/${category}`);
+      const response = await axios.get(`${apiUrl}/books/category/${category}`);
       setBooks(response.data.books || []);
       setFilteredBooks(response.data.books || []);
     } catch (error) {
@@ -35,7 +37,7 @@ const CategoryPage = () => {
 
   const deleteBook = async (bookId) => {
     try {
-      await axios.delete(`http://localhost:3000/books/${bookId}`);
+      await axios.delete(`${apiUrl}/books/${bookId}`);
       getBooksByCategory();
     } catch (error) {
       console.error("Error deleting book:", error);
@@ -73,7 +75,6 @@ const CategoryPage = () => {
               <th className="w-2/12 px-4 py-2 border border-gray-500 text-center">No Pengenal</th>
               <th className="w-2/12 px-4 py-2 border border-gray-500 text-center">Bahasa</th>
               <th className="w-2/12 px-4 py-2 border border-gray-500 text-center">Link</th>
-             
             </tr>
           </thead>
           <tbody>
@@ -103,7 +104,7 @@ const CategoryPage = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="14" className="px-4 py-2 text-center">No books found</td>
+                <td colSpan="11" className="px-4 py-2 text-center">No books found</td>
               </tr>
             )}
           </tbody>

@@ -4,9 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const FormEditMember = () => {
   const [name, setName] = useState("");
-  const [user_class, setUserClass] = useState(""); 
+  const [user_class, setUserClass] = useState("");
   const [address, setAddress] = useState("");
-  const [phone_number, setPhoneNumber] = useState(""); 
+  const [phone_number, setPhoneNumber] = useState("");
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
@@ -14,16 +14,14 @@ const FormEditMember = () => {
   useEffect(() => {
     const getMemberById = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/members/${id}`);
-        console.log("Data member: ", response.data); 
+        const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
+        const response = await axios.get(`${apiUrl}/members/${id}`);
         setName(response.data.name);
-        setUserClass(response.data.user_class); 
+        setUserClass(response.data.user_class);
         setAddress(response.data.address);
-        setPhoneNumber(response.data.phone_number); 
+        setPhoneNumber(response.data.phone_number);
       } catch (error) {
-        if (error.response) {
-          setMsg(error.response.data.msg);
-        }
+        setMsg(error.response?.data?.msg || "Failed to fetch member details");
       }
     };
     getMemberById();
@@ -32,7 +30,8 @@ const FormEditMember = () => {
   const updateMember = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:3000/members/${id}`, {
+      const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
+      await axios.patch(`${apiUrl}/members/${id}`, {
         name,
         user_class,
         address,
@@ -40,9 +39,7 @@ const FormEditMember = () => {
       });
       navigate("/members");
     } catch (error) {
-      if (error.response) {
-        setMsg(error.response.data.msg);
-      }
+      setMsg(error.response?.data?.msg || "Failed to update member");
     }
   };
 
@@ -61,6 +58,7 @@ const FormEditMember = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Name"
+              required
             />
           </div>
           <div className="mb-4">
@@ -68,9 +66,10 @@ const FormEditMember = () => {
             <input
               type="text"
               className="w-full px-3 py-2 bg-gray-800 text-white rounded"
-              value={user_class} 
-              onChange={(e) => setUserClass(e.target.value)} 
-              placeholder="Kelas"
+              value={user_class}
+              onChange={(e) => setUserClass(e.target.value)}
+              placeholder="Class"
+              required
             />
           </div>
           <div className="mb-4">
@@ -81,6 +80,7 @@ const FormEditMember = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="Address"
+              required
             />
           </div>
           <div className="mb-4">
@@ -88,9 +88,10 @@ const FormEditMember = () => {
             <input
               type="text"
               className="w-full px-3 py-2 bg-gray-800 text-white rounded"
-              value={phone_number} 
-              onChange={(e) => setPhoneNumber(e.target.value)} 
-              placeholder="Nomor Telepon"
+              value={phone_number}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              placeholder="Phone Number"
+              required
             />
           </div>
           <div className="mb-4">

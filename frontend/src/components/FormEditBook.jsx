@@ -20,7 +20,8 @@ const FormEditBook = () => {
   useEffect(() => {
     const getBookById = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/books/${id}`);
+        const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
+        const response = await axios.get(`${apiUrl}/books/${id}`);
         setName(response.data.name);
         setPengarang(response.data.pengarang);
         setPenerbit(response.data.penerbit);
@@ -32,9 +33,7 @@ const FormEditBook = () => {
         setBahasa(response.data.bahasa);
         setLink(response.data.link);
       } catch (error) {
-        if (error.response) {
-          setMsg(error.response.data.msg);
-        }
+        setMsg(error.response?.data?.msg || "Failed to fetch book details");
       }
     };
     getBookById();
@@ -43,23 +42,22 @@ const FormEditBook = () => {
   const updateBook = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:3000/books/${id}`, {
-        name: name,
-        pengarang: pengarang,
-        penerbit: penerbit,
-        isbn: isbn,
-        kategori: kategori,
-        sumber: sumber,
-        noinduk: noinduk,
-        nopengenal: nopengenal,
-        bahasa: bahasa,
-        link: link
+      const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
+      await axios.patch(`${apiUrl}/books/${id}`, {
+        name,
+        pengarang,
+        penerbit,
+        isbn,
+        kategori,
+        sumber,
+        noinduk,
+        nopengenal,
+        bahasa,
+        link
       });
       navigate("/books");
     } catch (error) {
-      if (error.response) {
-        setMsg(error.response.data.msg);
-      }
+      setMsg(error.response?.data?.msg || "Failed to update book");
     }
   };
 
@@ -77,7 +75,8 @@ const FormEditBook = () => {
               className="w-full px-3 py-2 bg-gray-800 text-white rounded"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Name"
+              placeholder="Book Name"
+              required
             />
           </div>
           <div className="mb-4">
@@ -87,7 +86,8 @@ const FormEditBook = () => {
               className="w-full px-3 py-2 bg-gray-800 text-white rounded"
               value={pengarang}
               onChange={(e) => setPengarang(e.target.value)}
-              placeholder="Pengarang"
+              placeholder="Author"
+              required
             />
           </div>
           <div className="mb-4">
@@ -97,7 +97,8 @@ const FormEditBook = () => {
               className="w-full px-3 py-2 bg-gray-800 text-white rounded"
               value={penerbit}
               onChange={(e) => setPenerbit(e.target.value)}
-              placeholder="Penerbit"
+              placeholder="Publisher"
+              required
             />
           </div>
           <div className="mb-4">
@@ -107,7 +108,8 @@ const FormEditBook = () => {
               className="w-full px-3 py-2 bg-gray-800 text-white rounded"
               value={isbn}
               onChange={(e) => setIsbn(e.target.value)}
-              placeholder="ISBN"
+              placeholder="ISBN Number"
+              required
             />
           </div>
           <div className="mb-4">
@@ -117,7 +119,8 @@ const FormEditBook = () => {
               className="w-full px-3 py-2 bg-gray-800 text-white rounded"
               value={kategori}
               onChange={(e) => setKategori(e.target.value)}
-              placeholder="Kategori"
+              placeholder="Category"
+              required
             />
           </div>
           <div className="mb-4">
@@ -127,7 +130,8 @@ const FormEditBook = () => {
               className="w-full px-3 py-2 bg-gray-800 text-white rounded"
               value={sumber}
               onChange={(e) => setSumber(e.target.value)}
-              placeholder="Sumber"
+              placeholder="Source"
+              required
             />
           </div>
           <div className="mb-4">
@@ -137,7 +141,8 @@ const FormEditBook = () => {
               className="w-full px-3 py-2 bg-gray-800 text-white rounded"
               value={noinduk}
               onChange={(e) => setNoinduk(e.target.value)}
-              placeholder="No Induk"
+              placeholder="Induk Number"
+              required
             />
           </div>
           <div className="mb-4">
@@ -147,7 +152,8 @@ const FormEditBook = () => {
               className="w-full px-3 py-2 bg-gray-800 text-white rounded"
               value={nopengenal}
               onChange={(e) => setNopengenal(e.target.value)}
-              placeholder="No Pengenal"
+              placeholder="Identifier Number"
+              required
             />
           </div>
           <div className="mb-4">
@@ -157,7 +163,8 @@ const FormEditBook = () => {
               className="w-full px-3 py-2 bg-gray-800 text-white rounded"
               value={bahasa}
               onChange={(e) => setBahasa(e.target.value)}
-              placeholder="Bahasa"
+              placeholder="Language"
+              required
             />
           </div>
           <div className="mb-4">
@@ -167,7 +174,7 @@ const FormEditBook = () => {
               className="w-full px-3 py-2 bg-gray-800 text-white rounded"
               value={link}
               onChange={(e) => setLink(e.target.value)}
-              placeholder="Link"
+              placeholder="Resource Link"
             />
           </div>
           <div className="mb-4">

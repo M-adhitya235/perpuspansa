@@ -19,22 +19,25 @@ const FormAddBook = () => {
   const saveBook = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/books", {
-        name: name,
-        pengarang: pengarang,
-        penerbit: penerbit,
-        isbn: isbn,
-        kategori: kategori,
-        sumber: sumber,
-        noinduk: noinduk,
-        nopengenal: nopengenal,
-        bahasa: bahasa,
-        link: link ? link : null 
+      const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
+      await axios.post(`${apiUrl}/books`, {
+        name,
+        pengarang,
+        penerbit,
+        isbn,
+        kategori,
+        sumber,
+        noinduk,
+        nopengenal,
+        bahasa,
+        link: link || null // Menetapkan null jika link kosong
       });
       navigate("/books");
     } catch (error) {
       if (error.response) {
-        setMsg(error.response.data.msg);
+        setMsg(error.response.data.msg || "Failed to add book");
+      } else {
+        setMsg("Failed to add book");
       }
     }
   };
@@ -54,6 +57,7 @@ const FormAddBook = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Name"
+              required
             />
           </div>
           <div className="mb-4">
@@ -64,6 +68,7 @@ const FormAddBook = () => {
               value={pengarang}
               onChange={(e) => setPengarang(e.target.value)}
               placeholder="Pengarang"
+              required
             />
           </div>
           <div className="mb-4">
@@ -74,6 +79,7 @@ const FormAddBook = () => {
               value={penerbit}
               onChange={(e) => setPenerbit(e.target.value)}
               placeholder="Penerbit"
+              required
             />
           </div>
           <div className="mb-4">
@@ -84,6 +90,7 @@ const FormAddBook = () => {
               value={isbn}
               onChange={(e) => setIsbn(e.target.value)}
               placeholder="ISBN"
+              required
             />
           </div>
           <div className="mb-4">
@@ -94,6 +101,7 @@ const FormAddBook = () => {
               value={kategori}
               onChange={(e) => setKategori(e.target.value)}
               placeholder="Kategori"
+              required
             />
           </div>
           <div className="mb-4">
@@ -104,6 +112,7 @@ const FormAddBook = () => {
               value={sumber}
               onChange={(e) => setSumber(e.target.value)}
               placeholder="Sumber"
+              required
             />
           </div>
           <div className="mb-4">
@@ -114,6 +123,7 @@ const FormAddBook = () => {
               value={noinduk}
               onChange={(e) => setNoinduk(e.target.value)}
               placeholder="No Induk"
+              required
             />
           </div>
           <div className="mb-4">
@@ -124,6 +134,7 @@ const FormAddBook = () => {
               value={nopengenal}
               onChange={(e) => setNopengenal(e.target.value)}
               placeholder="No Pengenal"
+              required
             />
           </div>
           <div className="mb-4">
@@ -134,6 +145,7 @@ const FormAddBook = () => {
               value={bahasa}
               onChange={(e) => setBahasa(e.target.value)}
               placeholder="Bahasa"
+              required
             />
           </div>
           <div className="mb-4">

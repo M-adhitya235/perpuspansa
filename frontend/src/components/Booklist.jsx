@@ -8,6 +8,8 @@ const Booklist = () => {
   const [search, setSearch] = useState("");
   const [filteredBooks, setFilteredBooks] = useState([]);
 
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     getBooks();
   }, []);
@@ -24,7 +26,7 @@ const Booklist = () => {
 
   const getBooks = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/books');
+      const response = await axios.get('${apiUrl}/books');
       setBooks(response.data.books || []);
     } catch (error) {
       console.error("Error fetching books:", error);
@@ -33,7 +35,7 @@ const Booklist = () => {
 
   const deleteBook = async (bookId) => {
     try {
-      await axios.delete(`http://localhost:3000/books/${bookId}`);
+      await axios.delete(`${apiUrl}/books/${bookId}`);
       getBooks();
     } catch (error) {
       console.error("Error deleting book:", error);

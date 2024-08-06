@@ -9,6 +9,8 @@ const Userlist = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [error, setError] = useState(""); 
 
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     getUsers();
   }, []);
@@ -24,7 +26,7 @@ const Userlist = () => {
 
   const getUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/users');
+      const response = await axios.get(`${apiUrl}/users`);
       const { users } = response.data; 
       setUsers(users);
     } catch (error) {
@@ -35,7 +37,7 @@ const Userlist = () => {
 
   const deleteUser = async (userId) => {
     try {
-      await axios.delete(`http://localhost:3000/users/${userId}`);
+      await axios.delete(`${apiUrl}/users/${userId}`);
       getUsers();
     } catch (error) {
       setError("Failed to delete user");
@@ -84,7 +86,7 @@ const Userlist = () => {
                 <td className="px-4 py-2 border border-gray-800 text-center">{user.name}</td>
                 <td className="px-4 py-2 border border-gray-800 text-center">{user.email}</td>
                 <td className="px-4 py-2 border border-gray-800 text-center">{user.role}</td>
-                <td className="px-4 py-2  flex space-x-2 justify-center text-center">
+                <td className="px-4 py-2 flex space-x-2 justify-center text-center">
                   <Link to={`/users/edit/${user.uuid}`} className="text-blue-500 hover:underline">Edit</Link>
                   <button onClick={() => deleteUser(user.uuid)} className="text-red-500 hover:underline">Delete</button>
                 </td>

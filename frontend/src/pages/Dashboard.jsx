@@ -5,6 +5,8 @@ import { getMe } from "../features/authSlice";
 import Layout from "./Layout";
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
 const Dashboard = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -16,12 +18,12 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const bookResponse = await axios.get("http://localhost:3000/books");
-                const userResponse = await axios.get("http://localhost:3000/users");
+                const bookResponse = await axios.get(`${apiUrl}/books`);
+                const userResponse = await axios.get(`${apiUrl}/users`);
 
                 setTotalBuku(bookResponse.data.total);
                 setTotalKategori(bookResponse.data.totalCategories);
-                setTotalUsers(userResponse.data.total); 
+                setTotalUsers(userResponse.data.total);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }

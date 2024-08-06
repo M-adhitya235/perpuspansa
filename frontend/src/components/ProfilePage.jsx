@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { FaEdit } from 'react-icons/fa';
+
+const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
 const ProfilePage = () => {
   const [user, setUser] = useState({
@@ -10,11 +13,10 @@ const ProfilePage = () => {
     phone_number: ""
   });
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   const getUser = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/members');
+      const response = await axios.get(`${apiUrl}/members`);
       setUser(response.data);
     } catch (error) {
       setError("Failed to fetch user");
@@ -43,6 +45,8 @@ const ProfilePage = () => {
         <div className="mb-2">
           <h2 className="text-lg text-gray-300 mb-1">Nomor Telepon: {user.phone_number}</h2>
         </div>
+        
+     
       </div>
     </div>
   );

@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import perpusCahayaImg from '../assets/perpuscahaya.jpg';
 
+const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,21 +18,26 @@ const Register = () => {
 
   const saveUser = async (e) => {
     e.preventDefault();
+    if (password !== confPassword) {
+      setMsg("Passwords do not match");
+      return;
+    }
     try {
-      await axios.post("http://localhost:3000/users", {
+      await axios.post(`${apiUrl}/users`, {
         name,
         user_class: userClass,
         address,
         phone_number: phoneNumber,
         email,
         password,
-        confPassword,
         role: "user", 
       });
       navigate("/login");
     } catch (error) {
       if (error.response) {
-        setMsg(error.response.data.msg);
+        setMsg(error.response.data.msg || "Registration failed");
+      } else {
+        setMsg("An error occurred");
       }
     }
   };

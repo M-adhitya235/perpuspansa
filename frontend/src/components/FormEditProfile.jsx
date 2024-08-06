@@ -13,17 +13,17 @@ const FormEditProfile = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const getUser = async () => {
-    try {
-      const response = await axios.get(`http://localhost:3000/members/${id}`);
-      setUser(response.data);
-    } catch (error) {
-      setError("Failed to fetch user");
-      console.error("Error fetching user:", error);
-    }
-  };
-
   useEffect(() => {
+    const getUser = async () => {
+      try {
+        const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
+        const response = await axios.get(`${apiUrl}/members/${id}`);
+        setUser(response.data);
+      } catch (error) {
+        setError("Failed to fetch user data");
+        console.error("Error fetching user:", error);
+      }
+    };
     getUser();
   }, [id]);
 
@@ -38,10 +38,11 @@ const FormEditProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:3000/members/${id}`, user);
+      const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
+      await axios.patch(`${apiUrl}/members/${id}`, user);
       navigate("/profile");
     } catch (error) {
-      setError("Failed to update user");
+      setError("Failed to update user profile");
       console.error("Error updating user:", error);
     }
   };
@@ -53,43 +54,47 @@ const FormEditProfile = () => {
         {error && <p className="text-red-500 text-center mb-2">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-2">
-            <label className="block text-gray-300 mb-1">Nama:</label>
+            <label className="block text-gray-300 mb-1">Name:</label>
             <input
               type="text"
               name="name"
               value={user.name}
               onChange={handleChange}
               className="w-full p-2 rounded bg-gray-700 text-white"
+              required
             />
           </div>
           <div className="mb-2">
-            <label className="block text-gray-300 mb-1">Kelas:</label>
+            <label className="block text-gray-300 mb-1">Class:</label>
             <input
               type="text"
               name="user_class"
               value={user.user_class}
               onChange={handleChange}
               className="w-full p-2 rounded bg-gray-700 text-white"
+              required
             />
           </div>
           <div className="mb-2">
-            <label className="block text-gray-300 mb-1">Alamat:</label>
+            <label className="block text-gray-300 mb-1">Address:</label>
             <input
               type="text"
               name="address"
               value={user.address}
               onChange={handleChange}
               className="w-full p-2 rounded bg-gray-700 text-white"
+              required
             />
           </div>
           <div className="mb-2">
-            <label className="block text-gray-300 mb-1">Nomor Telepon:</label>
+            <label className="block text-gray-300 mb-1">Phone Number:</label>
             <input
               type="text"
               name="phone_number"
               value={user.phone_number}
               onChange={handleChange}
               className="w-full p-2 rounded bg-gray-700 text-white"
+              required
             />
           </div>
           <div className="text-center">

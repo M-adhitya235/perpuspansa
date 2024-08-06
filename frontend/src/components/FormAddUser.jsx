@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 const FormAddUser = () => {
   const [name, setName] = useState("");
-  const [user_class, setUserClass] = useState(""); 
+  const [user_class, setUserClass] = useState("");
   const [address, setAddress] = useState("");
-  const [phone_number, setPhoneNumber] = useState(""); 
+  const [phone_number, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
@@ -16,31 +16,29 @@ const FormAddUser = () => {
 
   const saveUser = async (e) => {
     e.preventDefault();
-    console.log("Mengirim data untuk membuat user baru:", {
-      name,
-      user_class,
-      address,
-      phone_number,
-      email,
-      password,
-      confPassword,
-      role
-    });
+
+    if (password !== confPassword) {
+      setMsg("Password and confirm password do not match.");
+      return;
+    }
+
     try {
-      await axios.post("http://localhost:3000/users", {
+      const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
+      await axios.post(`${apiUrl}/users`, {
         name,
         user_class,
         address,
         phone_number,
         email,
         password,
-        confPassword,
         role
       });
       navigate("/users");
     } catch (error) {
       if (error.response) {
-        setMsg(error.response.data.msg);
+        setMsg(error.response.data.msg || "Failed to add user");
+      } else {
+        setMsg("Failed to add user");
       }
     }
   };
@@ -60,6 +58,7 @@ const FormAddUser = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Name"
+              required
             />
           </div>
           <div className="mb-4">
@@ -67,9 +66,10 @@ const FormAddUser = () => {
             <input
               type="text"
               className="w-full px-3 py-2 bg-gray-800 text-white rounded"
-              value={user_class} 
-              onChange={(e) => setUserClass(e.target.value)} 
+              value={user_class}
+              onChange={(e) => setUserClass(e.target.value)}
               placeholder="Kelas"
+              required
             />
           </div>
           <div className="mb-4">
@@ -80,6 +80,7 @@ const FormAddUser = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="Address"
+              required
             />
           </div>
           <div className="mb-4">
@@ -87,19 +88,21 @@ const FormAddUser = () => {
             <input
               type="text"
               className="w-full px-3 py-2 bg-gray-800 text-white rounded"
-              value={phone_number} 
-              onChange={(e) => setPhoneNumber(e.target.value)} 
+              value={phone_number}
+              onChange={(e) => setPhoneNumber(e.target.value)}
               placeholder="Nomor Telepon"
+              required
             />
           </div>
           <div className="mb-4">
             <label className="block text-gray-300 text-sm font-bold mb-2">Email</label>
             <input
-              type="text"
+              type="email"
               className="w-full px-3 py-2 bg-gray-800 text-white rounded"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
+              required
             />
           </div>
           <div className="mb-4">
@@ -110,6 +113,7 @@ const FormAddUser = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="******"
+              required
             />
           </div>
           <div className="mb-4">
@@ -120,6 +124,7 @@ const FormAddUser = () => {
               value={confPassword}
               onChange={(e) => setConfPassword(e.target.value)}
               placeholder="******"
+              required
             />
           </div>
           <div className="mb-4">
@@ -128,7 +133,9 @@ const FormAddUser = () => {
               className="w-full px-3 py-2 bg-gray-800 text-white rounded"
               value={role}
               onChange={(e) => setRole(e.target.value)}
+              required
             >
+              <option value="" disabled>Select Role</option>
               <option value="admin">Admin</option>
               <option value="user">User</option>
             </select>

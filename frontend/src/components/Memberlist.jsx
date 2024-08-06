@@ -25,7 +25,8 @@ const Memberlist = () => {
 
   const getUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/users');
+      const apiUrl = import.meta.env.VITE_API_BASE_URL;
+      const response = await axios.get(`${apiUrl}/users`);
       const { users } = response.data; 
       setUsers(users);
     } catch (error) {
@@ -36,7 +37,8 @@ const Memberlist = () => {
 
   const deleteUser = async (userId) => {
     try {
-      await axios.delete(`http://localhost:3000/users/${userId}`);
+      const apiUrl = import.meta.env.VITE_API_BASE_URL;
+      await axios.delete(`${apiUrl}/users/${userId}`);
       getUsers();
     } catch (error) {
       setError("Failed to delete user");

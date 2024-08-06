@@ -18,17 +18,19 @@ const FormEditUser = () => {
   useEffect(() => {
     const getUserById = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/users/${id}`);
-        console.log("Data user: ", response.data); 
+        const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
+        const response = await axios.get(`${apiUrl}/users/${id}`);
         setName(response.data.name);
-        setUserClass(response.data.user_class); 
-        setAddress(response.data.address); 
-        setPhoneNumber(response.data.phone_number); 
+        setUserClass(response.data.user_class);
+        setAddress(response.data.address);
+        setPhoneNumber(response.data.phone_number);
         setEmail(response.data.email);
         setRole(response.data.role);
       } catch (error) {
         if (error.response) {
-          setMsg(error.response.data.msg);
+          setMsg(error.response.data.msg || "Failed to fetch user data");
+        } else {
+          setMsg("Network error");
         }
       }
     };
@@ -37,31 +39,31 @@ const FormEditUser = () => {
 
   const updateUser = async (e) => {
     e.preventDefault();
-    console.log("Mengirim data untuk update user:", {
-      name,
-      user_class,
-      address,
-      phone_number,
-      email,
-      password,
-      confPassword,
-      role
-    });
+    if (password !== confPassword) {
+      setMsg("Passwords do not match");
+      return;
+    }
+
     try {
-      await axios.patch(`http://localhost:3000/users/${id}`, {
+      const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
+      const updateData = {
         name,
         user_class,
         address,
         phone_number,
         email,
-        password,
-        confPassword,
-        role,
-      });
+        role
+      };
+      if (password) {
+        updateData.password = password; // Kirimkan password hanya jika ada perubahan
+      }
+      await axios.patch(`${apiUrl}/users/${id}`, updateData);
       navigate("/users");
     } catch (error) {
       if (error.response) {
-        setMsg(error.response.data.msg);
+        setMsg(error.response.data.msg || "Failed to update user");
+      } else {
+        setMsg("Network error");
       }
     }
   };
@@ -71,7 +73,7 @@ const FormEditUser = () => {
       <h1 className="text-3xl font-bold text-white mb-4">Users</h1>
       <h2 className="text-xl text-gray-300 mb-6">Update User</h2>
       <div className="bg-gray-900 p-6 rounded-lg">
-        <p className="text-red-500 text-center mb-4">{msg}</p>
+        {msg && <p className="text-red-500 text-center mb-4">{msg}</p>}
         <form onSubmit={updateUser}>
           <div className="mb-4">
             <label className="block text-gray-300 text-sm font-bold mb-2">Name</label>
@@ -81,6 +83,7 @@ const FormEditUser = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Name"
+              required
             />
           </div>
           <div className="mb-4">
@@ -91,6 +94,7 @@ const FormEditUser = () => {
               value={user_class}
               onChange={(e) => setUserClass(e.target.value)}
               placeholder="Kelas"
+              required
             />
           </div>
           <div className="mb-4">
@@ -101,6 +105,7 @@ const FormEditUser = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="Address"
+              required
             />
           </div>
           <div className="mb-4">
@@ -111,16 +116,18 @@ const FormEditUser = () => {
               value={phone_number}
               onChange={(e) => setPhoneNumber(e.target.value)}
               placeholder="Nomor Telepon"
+              required
             />
           </div>
           <div className="mb-4">
             <label className="block text-gray-300 text-sm font-bold mb-2">Email</label>
             <input
-              type="text"
+              type="email"
               className="w-full px-3 py-2 bg-gray-800 text-white rounded"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
+              required
             />
           </div>
           <div className="mb-4">
