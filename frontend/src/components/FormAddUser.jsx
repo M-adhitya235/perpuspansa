@@ -18,9 +18,9 @@ const FormAddUser = () => {
     e.preventDefault();
     console.log({
       name,
-      user_class: userClass,
+      user_class,
       address,
-      phone_number: phoneNumber,
+      phone_number,
       email,
       password,
       confPassword
@@ -29,9 +29,9 @@ const FormAddUser = () => {
     try {
       await axiosInstance.post('/users', {
         name,
-        user_class: userClass,
+        user_class,
         address,
-        phone_number: phoneNumber,
+        phone_number,
         email,
         password,
         confPassword, 
