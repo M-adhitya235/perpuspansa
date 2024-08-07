@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "./axiosInstance"; // Ganti dengan path yang sesuai
+import axiosInstance from "./axiosInstance";
 
 const initialState = {
     user: null,
@@ -15,6 +15,8 @@ export const LoginUser = createAsyncThunk("user/LoginUser", async(user, thunkAPI
             email: user.email,
             password: user.password
         });
+        // Simpan token ke localStorage
+        localStorage.setItem('token', response.data.token); // Sesuaikan dengan struktur respons dari backend
         return response.data;
     } catch (error) {
         if (error.response) {
@@ -56,6 +58,8 @@ export const getMe = createAsyncThunk("user/getMe", async(_, thunkAPI) => {
 
 export const LogOut = createAsyncThunk("user/LogOut", async() => {
     await axiosInstance.delete(`/logout`);
+    // Hapus token dari localStorage saat logout
+    localStorage.removeItem('token');
 });
 
 export const updateProfile = createAsyncThunk("user/updateProfile", async(user, thunkAPI) => {
