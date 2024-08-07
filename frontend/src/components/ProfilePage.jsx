@@ -48,14 +48,16 @@ const ProfilePage = () => {
         <div className="mb-2">
           <h2 className="text-lg text-gray-300 mb-1">Nomor Telepon: {user.phone_number}</h2>
         </div>
-        <div className="text-center mt-4">
-          <button
-            onClick={handleEditClick}
-            className="flex items-center text-blue-500 hover:underline"
-          >
-            <FaEdit className="mr-1" /> Edit Profile
-          </button>
-        </div>
+        {user && user.role === "admin" && (
+          <div className="text-center mt-4">
+            <button
+              onClick={handleEditClick}
+              className="flex items-center text-blue-500 hover:underline"
+            >
+              <FaEdit className="mr-1" /> Edit Profile
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
