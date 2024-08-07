@@ -34,7 +34,7 @@ const Register = () => {
         phone_number: phoneNumber,
         email,
         password,
-        confPassword, // Pastikan ini ada dalam request body
+        confPassword, 
         role: "user",
       });
       navigate("/login");

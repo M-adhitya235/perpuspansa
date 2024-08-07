@@ -16,21 +16,26 @@ const FormAddUser = () => {
 
   const saveUser = async (e) => {
     e.preventDefault();
-
-    if (password !== confPassword) {
-      setMsg("Password and confirm password do not match.");
-      return;
-    }
-
+    console.log({
+      name,
+      user_class: userClass,
+      address,
+      phone_number: phoneNumber,
+      email,
+      password,
+      confPassword
+    });
+  
     try {
       await axiosInstance.post('/users', {
         name,
-        user_class,
+        user_class: userClass,
         address,
-        phone_number,
+        phone_number: phoneNumber,
         email,
         password,
-        role
+        confPassword, 
+        role: "user",
       });
       navigate("/users");
     } catch (error) {
