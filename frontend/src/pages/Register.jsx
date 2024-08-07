@@ -16,9 +16,16 @@ const Register = () => {
 
   const saveUser = async (e) => {
     e.preventDefault();
-    
-    
-
+    console.log({
+      name,
+      user_class: userClass,
+      address,
+      phone_number: phoneNumber,
+      email,
+      password,
+      confPassword
+    });
+  
     try {
       await axiosInstance.post('/users', {
         name,
@@ -27,6 +34,7 @@ const Register = () => {
         phone_number: phoneNumber,
         email,
         password,
+        confPassword, // Pastikan ini ada dalam request body
         role: "user",
       });
       navigate("/login");
