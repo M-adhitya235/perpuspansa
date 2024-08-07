@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../features/axiosInstance";
 import { useNavigate, useParams } from "react-router-dom";
 
 const FormEditUser = () => {
@@ -18,8 +18,7 @@ const FormEditUser = () => {
   useEffect(() => {
     const getUserById = async () => {
       try {
-        const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
-        const response = await axios.get(`${apiUrl}/users/${id}`);
+        const response = await axiosInstance.get(`/users/${id}`);
         setName(response.data.name);
         setUserClass(response.data.user_class);
         setAddress(response.data.address);
@@ -45,7 +44,6 @@ const FormEditUser = () => {
     }
 
     try {
-      const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
       const updateData = {
         name,
         user_class,
@@ -57,7 +55,7 @@ const FormEditUser = () => {
       if (password) {
         updateData.password = password; // Kirimkan password hanya jika ada perubahan
       }
-      await axios.patch(`${apiUrl}/users/${id}`, updateData);
+      await axiosInstance.patch(`/users/${id}`, updateData);
       navigate("/users");
     } catch (error) {
       if (error.response) {

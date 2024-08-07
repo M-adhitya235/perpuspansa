@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../features/axiosInstance";
 import { useNavigate, useParams } from "react-router-dom";
 
 const FormEditBook = () => {
@@ -20,8 +20,7 @@ const FormEditBook = () => {
   useEffect(() => {
     const getBookById = async () => {
       try {
-        const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
-        const response = await axios.get(`${apiUrl}/books/${id}`);
+        const response = await axiosInstance.get(`/books/${id}`);
         setName(response.data.name);
         setPengarang(response.data.pengarang);
         setPenerbit(response.data.penerbit);
@@ -42,8 +41,7 @@ const FormEditBook = () => {
   const updateBook = async (e) => {
     e.preventDefault();
     try {
-      const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
-      await axios.patch(`${apiUrl}/books/${id}`, {
+      await axiosInstance.patch(`/books/${id}`, {
         name,
         pengarang,
         penerbit,

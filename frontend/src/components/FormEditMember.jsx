@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../features/axiosInstance"; 
 import { useNavigate, useParams } from "react-router-dom";
 
 const FormEditMember = () => {
@@ -14,8 +14,7 @@ const FormEditMember = () => {
   useEffect(() => {
     const getMemberById = async () => {
       try {
-        const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
-        const response = await axios.get(`${apiUrl}/members/${id}`);
+        const response = await axiosInstance.get(`/members/${id}`);
         setName(response.data.name);
         setUserClass(response.data.user_class);
         setAddress(response.data.address);
@@ -30,8 +29,7 @@ const FormEditMember = () => {
   const updateMember = async (e) => {
     e.preventDefault();
     try {
-      const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
-      await axios.patch(`${apiUrl}/members/${id}`, {
+      await axiosInstance.patch(`/members/${id}`, {
         name,
         user_class,
         address,

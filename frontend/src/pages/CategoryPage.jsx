@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../features/axiosInstance'; 
 import { FaSearch } from 'react-icons/fa';
-
-const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
 const CategoryPage = () => {
   const { category } = useParams();
@@ -27,7 +25,7 @@ const CategoryPage = () => {
 
   const getBooksByCategory = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/books/category/${category}`);
+      const response = await axiosInstance.get(`/books/category/${category}`);
       setBooks(response.data.books || []);
       setFilteredBooks(response.data.books || []);
     } catch (error) {
@@ -37,7 +35,7 @@ const CategoryPage = () => {
 
   const deleteBook = async (bookId) => {
     try {
-      await axios.delete(`${apiUrl}/books/${bookId}`);
+      await axiosInstance.delete(`/books/${bookId}`);
       getBooksByCategory();
     } catch (error) {
       console.error("Error deleting book:", error);

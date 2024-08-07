@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../features/axiosInstance"; 
 import { FaSearch } from 'react-icons/fa';
 
 const Memberlist = () => {
@@ -25,8 +25,7 @@ const Memberlist = () => {
 
   const getUsers = async () => {
     try {
-      const apiUrl = import.meta.env.VITE_API_BASE_URL;
-      const response = await axios.get(`${apiUrl}/users`);
+      const response = await axiosInstance.get('/users');
       const { users } = response.data; 
       setUsers(users);
     } catch (error) {
@@ -37,8 +36,7 @@ const Memberlist = () => {
 
   const deleteUser = async (userId) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_BASE_URL;
-      await axios.delete(`${apiUrl}/users/${userId}`);
+      await axiosInstance.delete(`/users/${userId}`);
       getUsers();
     } catch (error) {
       setError("Failed to delete user");
@@ -83,7 +81,7 @@ const Memberlist = () => {
                 if (user.role === "admin") return null;
                 return (
                 <tr key={user.uuid} className="bg-gray-100 border-b border-gray-800">
-                    <td className="px-4 py-2 border border-gray-800 text-center">{index}</td>
+                    <td className="px-4 py-2 border border-gray-800 text-center">{index + 1}</td>
                     <td className="px-4 py-2 border border-gray-800 text-center">{user.name}</td>
                     <td className="px-4 py-2 border border-gray-800 text-center">{user.user_class}</td>
                     <td className="px-4 py-2 border border-gray-800 text-center">{user.address}</td>

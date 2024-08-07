@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axiosInstance from "../features/axiosInstance";
 import { useNavigate } from "react-router-dom";
 
 const FormAddUser = () => {
@@ -23,8 +23,7 @@ const FormAddUser = () => {
     }
 
     try {
-      const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
-      await axios.post(`${apiUrl}/users`, {
+      await axiosInstance.post('/users', {
         name,
         user_class,
         address,

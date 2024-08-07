@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../features/axiosInstance"; 
 import { FaSearch } from 'react-icons/fa';
 
 const Userlist = () => {
@@ -8,8 +8,6 @@ const Userlist = () => {
   const [search, setSearch] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [error, setError] = useState(""); 
-
-  const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     getUsers();
@@ -26,7 +24,7 @@ const Userlist = () => {
 
   const getUsers = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/users`);
+      const response = await axiosInstance.get(`/users`);
       const { users } = response.data; 
       setUsers(users);
     } catch (error) {
@@ -37,7 +35,7 @@ const Userlist = () => {
 
   const deleteUser = async (userId) => {
     try {
-      await axios.delete(`${apiUrl}/users/${userId}`);
+      await axiosInstance.delete(`/users/${userId}`);
       getUsers();
     } catch (error) {
       setError("Failed to delete user");

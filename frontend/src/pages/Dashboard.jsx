@@ -3,9 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getMe } from "../features/authSlice";
 import Layout from "./Layout";
-import axios from "axios";
-
-const apiUrl = import.meta.env.VITE_API_BASE_URL;
+import axiosInstance from '../features/axiosInstance'; 
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -18,8 +16,8 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const bookResponse = await axios.get(`${apiUrl}/books`);
-                const userResponse = await axios.get(`${apiUrl}/users`);
+                const bookResponse = await axiosInstance.get('/books');
+                const userResponse = await axiosInstance.get('/users');
 
                 setTotalBuku(bookResponse.data.total);
                 setTotalKategori(bookResponse.data.totalCategories);

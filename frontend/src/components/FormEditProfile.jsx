@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../features/axiosInstance"; // Pastikan path ini sesuai dengan struktur proyek Anda
 import { useNavigate, useParams } from "react-router-dom";
 
 const FormEditProfile = () => {
@@ -16,8 +16,7 @@ const FormEditProfile = () => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
-        const response = await axios.get(`${apiUrl}/members/${id}`);
+        const response = await axiosInstance.get(`/members/${id}`);
         setUser(response.data);
       } catch (error) {
         setError("Failed to fetch user data");
@@ -38,8 +37,7 @@ const FormEditProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
-      await axios.patch(`${apiUrl}/members/${id}`, user);
+      await axiosInstance.patch(`/members/${id}`, user);
       navigate("/profile");
     } catch (error) {
       setError("Failed to update user profile");

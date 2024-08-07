@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axiosInstance from "../features/axiosInstance"; 
 import { useNavigate } from "react-router-dom";
 
 const FormAddBook = () => {
@@ -19,8 +19,7 @@ const FormAddBook = () => {
   const saveBook = async (e) => {
     e.preventDefault();
     try {
-      const apiUrl = import.meta.env.VITE_API_BASE_URL; // Menggunakan environment variable
-      await axios.post(`${apiUrl}/books`, {
+      await axiosInstance.post('/books', {
         name,
         pengarang,
         penerbit,

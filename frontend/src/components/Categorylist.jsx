@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from "axios";
+import axiosInstance from '../features/axiosInstance';
 
 const Categorylist = () => {
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredBooks, setFilteredBooks] = useState([]);
-
-  const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     getBooks();
@@ -22,7 +20,7 @@ const Categorylist = () => {
 
   const getBooks = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/books`);
+      const response = await axiosInstance.get('/books');
       setBooks(response.data.books || []);
     } catch (error) {
       console.error("Error fetching books:", error);
@@ -31,7 +29,7 @@ const Categorylist = () => {
 
   const deleteBook = async (bookId) => {
     try {
-      await axios.delete(`${apiUrl}/books/${bookId}`);
+      await axiosInstance.delete(`/books/${bookId}`);
       getBooks();
     } catch (error) {
       console.error("Failed to delete book:", error);
