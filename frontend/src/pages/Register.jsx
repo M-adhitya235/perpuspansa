@@ -18,10 +18,7 @@ const Register = () => {
 
   const saveUser = async (e) => {
     e.preventDefault();
-    if (password !== confPassword) {
-      setMsg("Passwords do not match");
-      return;
-    }
+    
     try {
       await axios.post(`${apiUrl}/users`, {
         name,
