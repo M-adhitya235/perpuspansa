@@ -17,11 +17,7 @@ const Register = () => {
   const saveUser = async (e) => {
     e.preventDefault();
     
-    // Cek apakah password dan konfirmasi password cocok
-    if (password !== confPassword) {
-      setMsg("Passwords do not match");
-      return;
-    }
+    
 
     try {
       await axiosInstance.post('/users', {
