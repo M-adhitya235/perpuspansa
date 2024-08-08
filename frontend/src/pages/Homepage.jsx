@@ -1,38 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaBook, FaPen, FaBible, FaEllipsisH } from 'react-icons/fa'; 
+import { FaBook, FaPen, FaEllipsisH } from 'react-icons/fa'; 
 import Navbar from "../components/Navbar";
 import headerImage from '../assets/pic-1.jpg';
 import Footer from '../components/Footer';
 
 const Homepage = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate(); 
 
- 
   const handleMoreClick = () => {
     navigate('/book'); 
   };
 
   return (
     <div className="min-h-screen flex flex-col">
-    <Navbar />
+      <Navbar />
       <img src={headerImage} alt="Header" className="w-full h-64 object-cover mt-16" /> 
-      
 
       <div className="p-4">
         <h2 id="welcome" className="text-2xl font-bold mb-4 text-center">Pintasan</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 justify-center">
-          <Link to="/genre/Fiction" className="bg-gray-100 border border-gray-300 rounded-md flex items-center justify-center h-12 text-center text-gray-800 no-underline hover:bg-gray-200 transition-colors">
+          <Link to="/kategori/Fiksi" className="bg-gray-100 border border-gray-300 rounded-md flex items-center justify-center h-12 text-center text-gray-800 no-underline hover:bg-gray-200 transition-colors">
             <FaBook size={20} className="mr-2" />
             <h3 className="text-lg">Buku Fiksi</h3>
           </Link>
-          <Link to="/genre/Non-fiction" className="bg-gray-100 border border-gray-300 rounded-md flex items-center justify-center h-12 text-center text-gray-800 no-underline hover:bg-gray-200 transition-colors">
+          <Link to="/kategori/Non-Fiksi" className="bg-gray-100 border border-gray-300 rounded-md flex items-center justify-center h-12 text-center text-gray-800 no-underline hover:bg-gray-200 transition-colors">
             <FaPen size={20} className="mr-2" />
             <h3 className="text-lg">Non-Fiksi</h3>
           </Link>
-          <Link to="/genre/Religion" className="bg-gray-100 border border-gray-300 rounded-md flex items-center justify-center h-12 text-center text-gray-800 no-underline hover:bg-gray-200 transition-colors">
-            <FaBible size={20} className="mr-2" />
+          <Link to="/kategori/Pendidikan-Agama" className="bg-gray-100 border border-gray-300 rounded-md flex items-center justify-center h-12 text-center text-gray-800 no-underline hover:bg-gray-200 transition-colors">
+            <FaBook size={20} className="mr-2" /> {/* Ganti ikon di sini */}
             <h3 className="text-lg">Agama</h3>
           </Link>
           <button className="bg-blue-500 text-white rounded-md flex items-center justify-center h-12 text-center no-underline hover:bg-blue-600 transition-colors" onClick={handleMoreClick}>
@@ -62,7 +59,6 @@ const Homepage = () => {
         </section>
       </div>
 
-      {/* Move Footer outside of the container */}
       <Footer />
     </div>
   );
