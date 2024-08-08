@@ -16,15 +16,6 @@ const FormAddUser = () => {
 
   const saveUser = async (e) => {
     e.preventDefault();
-    console.log({
-      name,
-      user_class,
-      address,
-      phone_number,
-      email,
-      password,
-      confPassword
-    });
   
     try {
       await axiosInstance.post('/users', {
@@ -35,7 +26,7 @@ const FormAddUser = () => {
         email,
         password,
         confPassword, 
-        role: "user",
+        role,
       });
       navigate("/users");
     } catch (error) {
@@ -73,7 +64,6 @@ const FormAddUser = () => {
               value={user_class}
               onChange={(e) => setUserClass(e.target.value)}
               placeholder="Kelas"
-              required
             />
           </div>
           <div className="mb-4">
@@ -84,7 +74,6 @@ const FormAddUser = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="Address"
-              required
             />
           </div>
           <div className="mb-4">
@@ -95,7 +84,6 @@ const FormAddUser = () => {
               value={phone_number}
               onChange={(e) => setPhoneNumber(e.target.value)}
               placeholder="Nomor Telepon"
-              required
             />
           </div>
           <div className="mb-4">
