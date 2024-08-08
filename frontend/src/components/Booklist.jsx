@@ -45,7 +45,6 @@ const Booklist = () => {
       <h1 className="text-2xl font-bold mb-4">Books</h1>
       <h2 className="text-xl mb-6">List Of Books</h2>
       <div className="mb-4 flex justify-between items-center">
-      
           <Link 
             to="/books/add" 
             className="inline-block px-6 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
@@ -79,9 +78,8 @@ const Booklist = () => {
               <th className="w-2/12 px-4 py-2 border border-gray-500 text-center">Bahasa</th>
               <th className="w-2/12 px-4 py-2 border border-gray-500 text-center">Link</th>
               <th className="w-2/12 px-4 py-2 border border-gray-500 text-center">Created By</th>
-              {user && user.role === "admin" && (
-                <th className="w-2/12 px-4 py-2 border border-gray-500 text-center">Actions</th>
-              )}
+              <th className="w-2/12 px-4 py-2 border border-gray-500 text-center">Actions</th>
+
             </tr>
           </thead>
           <tbody>
@@ -108,12 +106,12 @@ const Booklist = () => {
                     )}
                   </td>
                   <td className="px-4 py-2 border border-gray-800 text-center">{book.user ? book.user.name : "Unknown"}</td>
-                  {user && user.role === "admin" && (
+                  
                     <td className="px-4 py-2 flex justify-center space-x-2 text-center">
                       <Link to={`/books/edit/${book.uuid}`} className="text-blue-500 hover:underline text-center">Edit</Link>
                       <button onClick={() => deleteBook(book.uuid)} className="text-red-500 hover:underline text-center">Delete</button>
                     </td>
-                  )}
+                
                 </tr>
               ))
             ) : (
