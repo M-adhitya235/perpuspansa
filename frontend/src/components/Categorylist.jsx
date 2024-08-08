@@ -11,8 +11,9 @@ const Categorylist = () => {
   }, []);
 
   useEffect(() => {
+    const uniqueCategories = getUniqueCategories(books);
     setFilteredBooks(
-      books.filter(book =>
+      uniqueCategories.filter(book =>
         book.kategori.toLowerCase().includes(search.toLowerCase())
       )
     );
@@ -27,13 +28,13 @@ const Categorylist = () => {
     }
   };
 
-  const deleteBook = async (bookId) => {
-    try {
-      await axiosInstance.delete(`/books/${bookId}`);
-      getBooks();
-    } catch (error) {
-      console.error("Failed to delete book:", error);
-    }
+  const getUniqueCategories = (books) => {
+    const seenCategories = new Set();
+    return books.filter(book => {
+      const isDuplicate = seenCategories.has(book.kategori);
+      seenCategories.add(book.kategori);
+      return !isDuplicate;
+    });
   };
 
   return (
