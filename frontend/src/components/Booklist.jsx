@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axiosInstance from '../features/axiosInstance';
 import { FaSearch } from 'react-icons/fa';
 
-const Booklist = ({ user }) => {
+const Booklist = () => {
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredBooks, setFilteredBooks] = useState([]);
@@ -45,14 +45,13 @@ const Booklist = ({ user }) => {
       <h1 className="text-2xl font-bold mb-4">Books</h1>
       <h2 className="text-xl mb-6">List Of Books</h2>
       <div className="mb-4 flex justify-between items-center">
-        {user && user.role === "admin" && (
+      
           <Link 
             to="/books/add" 
             className="inline-block px-6 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
           >
             Add Book
           </Link>
-        )}
         <div className="flex items-center border border-gray-600 rounded w-full max-w-xs">
           <input
             type="text"
