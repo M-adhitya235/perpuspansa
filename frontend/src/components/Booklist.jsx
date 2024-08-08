@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import axiosInstance from '../features/axiosInstance';
 import { FaSearch } from 'react-icons/fa';
 
-const Booklist = ({ user }) => {
+const Booklist = () => {
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState("");
+  const { user } = useSelector((state) => state.auth);
   const [filteredBooks, setFilteredBooks] = useState([]);
 
   useEffect(() => {
