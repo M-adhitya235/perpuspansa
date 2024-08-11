@@ -28,7 +28,7 @@ const Footer = () => {
           Kota Balikpapan, Kalimantan Timur <br />
           76112
         </p>
-        <p>&copy; 2024 Perpustakaan Cahaya SMPN 1 Balikpapan By Three Musketeers ITK. All rights reserved.</p>
+        <p>&copy; 2024 Perpustakaan Cahaya SMPN 1 Balikpapan By Trio ITK. All rights reserved.</p>
       </div>
     </footer>
   );
