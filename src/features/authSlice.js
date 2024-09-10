@@ -16,7 +16,7 @@ export const LoginUser = createAsyncThunk("user/LoginUser", async(user, thunkAPI
             password: user.password
         });
         // Simpan token ke localStorage
-        localStorage.setItem('token', response.data.token); // Sesuaikan dengan struktur respons dari backend
+        localStorage.setItem('token', response.data.token); 
         return response.data;
     } catch (error) {
         if (error.response) {
